@@ -43,3 +43,8 @@ const WorkoutSchema = new Schema({
     }]
 });
 
+// Creates model based on the above schema, using mongoose's model method
+const Workout = mongoose.model("Workout", WorkoutSchema);
+
+// Export the Workout model
+module.exports = Workout;
