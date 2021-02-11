@@ -1,5 +1,4 @@
 const db = require("../models");
-const { rawListeners } = require("../models/Workout");
 
 module.exports = function (app) {
   // GET ROUTES
@@ -7,6 +6,13 @@ module.exports = function (app) {
   app.get("/api/workouts", (req, res) => {
     db.Workout.find({})
       .then((dbWorkout) => {
+        dbWorkout.forEach((workout) => {
+            let sum = 0;
+            workout.exercises.forEach((n) => {
+                sum += n.duration;
+            });
+            workout.totalDuration = sum;
+        });
         res.json(dbWorkout);
       })
       .catch(({ message }) => {
@@ -78,9 +84,13 @@ module.exports = function (app) {
 
   // POST ROUTES
   // Post new created exercise
-  app.post("/api/workouts", (req, res) => {
-      db.Workout.create({}).then(newExcercise => {
-          res.json(newExcercise);
+  app.post("/api/workouts", ({ body }, res) => {
+    db.Workout.create(body)
+      .then((dbWorkout) => {
+        res.json(dbWorkout);
+      })
+      .catch((err) => {
+        res.json(err);
       });
   });
 };

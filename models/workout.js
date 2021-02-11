@@ -39,15 +39,6 @@ const WorkoutSchema = new Schema({
     }
 });
 
-// Get the total duration
-WorkoutSchema.methods.getTotalDuration = function() {
-    this.totalDuration = 0;
-    for(let i=0; i < this.exercises.length; i++) {
-        this.totalDuration += this.exercises[i].duration;
-    }
-    return this.totalDuration;
-};
-
 // Creates model based on the above schema, using mongoose's model method
 const Workout = mongoose.model("Workout", WorkoutSchema);
 
