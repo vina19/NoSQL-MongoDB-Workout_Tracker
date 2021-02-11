@@ -1,4 +1,5 @@
 const db = require("../models");
+const { rawListeners } = require("../models/Workout");
 
 module.exports = function (app) {
   // GET ROUTES
@@ -77,5 +78,13 @@ module.exports = function (app) {
           res.json(err);
         });
     }
+  });
+
+  // POST ROUTES
+  // Post new created exercise
+  app.post("/api/workouts", (req, res) => {
+      db.Workout.create({}).then(newExcercise => {
+          res.json(newExcercise);
+      });
   });
 };
