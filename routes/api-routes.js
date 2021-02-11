@@ -26,42 +26,56 @@ module.exports = function (app) {
 
   // PUT to add an exercise
   app.put("/api/workouts/:id", (req, res) => {
-
-      if (req.body.exerciseType === "cardio") {
-        db.Workout.findOneAndUpdate({ _id: req.params.id }, { $push: { exercises: [
-          {
-            exerciseType : "cardio",
-            "name" : req.body.name,
-            "weight" : req.body.weight,
-            "sets" : req.body.sets,
-            "reps" : req.body.reps,
-            "duration" : req.body.duration,
-            "distance" : req.body.distance
-          }
-        ]
-        }}).then(dbWorkout => {
-            res.json(dbWorkout);
+    if (req.body.exerciseType === "cardio") {
+      db.Workout.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+          $push: {
+            exercises: [
+              {
+                exerciseType: "cardio",
+                name: req.body.name,
+                weight: req.body.weight,
+                sets: req.body.sets,
+                reps: req.body.reps,
+                duration: req.body.duration,
+                distance: req.body.distance,
+              },
+            ],
+          },
+        }
+      )
+        .then((dbWorkout) => {
+          res.json(dbWorkout);
         })
-        .catch(err => {
-            res.json(err);
+        .catch((err) => {
+          res.json(err);
         });
-      } else {
-        db.Workout.findOneAndUpdate({ _id: req.params.id }, { $push: { exercises: [
-          {
-            exerciseType : "resistance",
-            "name" : req.body.name,
-            "weight" : req.body.weight,
-            "sets" : req.body.sets,
-            "reps" : req.body.reps,
-            "duration" : req.body.duration,
-            "distance" : req.body.distance
-          }
-        ]
-        }}).then(dbWorkout => {
-            res.json(dbWorkout);
+    } else {
+      db.Workout.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+          $push: {
+            exercises: [
+              {
+                exerciseType: "resistance",
+                name: req.body.name,
+                weight: req.body.weight,
+                sets: req.body.sets,
+                reps: req.body.reps,
+                duration: req.body.duration,
+                distance: req.body.distance,
+              },
+            ],
+          },
+        }
+      )
+        .then((dbWorkout) => {
+          res.json(dbWorkout);
         })
-        .catch(err => {
-            res.json(err);
+        .catch((err) => {
+          res.json(err);
         });
-      };
-})};
+    }
+  });
+};
