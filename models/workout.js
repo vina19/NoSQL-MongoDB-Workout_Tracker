@@ -20,28 +20,33 @@ const WorkoutSchema = new Schema({
         },
         weight: {
             type: Number,
-            trim: true,
-            required: "Enter your weight is required in order for us to track your daily workout progress."
         },
         sets: {
             type: Number,
-            trim: true
         },
         reps: {
             type: Number,
-            trim: true
         },
         duration: {
             type: Number,
-            trim: true,
-            required: "Enter your workout duration for today in order for us to track your daily workout progress."
         },
         distance: {
             type: Number,
-            trim: true
         }
-    }]
+    }],
+    totalDuration: {
+        type: Number,
+    }
 });
+
+// Get the total duration
+WorkoutSchema.methods.getTotalDuration = function() {
+    this.totalDuration = 0;
+    for(let i=0; i < this.exercises.length; i++) {
+        this.totalDuration += this.exercises[i].duration;
+    }
+    return this.totalDuration;
+};
 
 // Creates model based on the above schema, using mongoose's model method
 const Workout = mongoose.model("Workout", WorkoutSchema);
