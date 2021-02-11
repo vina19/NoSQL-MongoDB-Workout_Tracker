@@ -16,6 +16,10 @@ app.use(express.json());
 // Serve static content for app from public directory
 app.use(express.static("public"));
 
+// Import routes and give the server access to them.
+require("./routes/api-routes")(app);
+require("./routes/html-routes")(app);
+
 // Connect to mongoose
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
     useNewUrlParser: true,
